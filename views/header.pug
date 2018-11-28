@@ -1,0 +1,57 @@
+doctype html
+html
+	head
+		title Marketplace home
+
+		link(href="/public/css/bootstrap.min.css", rel="stylesheet", type="text/css")
+		link(href="/public/css/style.css", rel="stylesheet", type="text/css")
+		link(href="/public/css/font-awesome.min.css" rel="stylesheet" type="text/css")
+		link(href="/public/css/cropper.min.css" rel="stylesheet" type="text/css")
+		link(href="/public/css/select2.min.css" rel="stylesheet" type="text/css")
+		link(href="/public/css/toastr.css" rel="stylesheet" type="text/css")
+		link(href='/public/css/custom.css', rel='stylesheet', type='text/css')
+
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+
+		script(src="/config/config.js")
+		
+		script(src="/public/js/cropper.min.js")
+		script(src="/public/js/dropzone.js")
+		script(src="/public/js/video-embed.js")
+		script(src="/public/js/select2.min.js")
+		script(src="/public/js/jqBootstrapValidation.js")
+		script(src="/public/js/jquery.flot.min.js")
+		script(src="/public/js/cropper-dropzone.js")
+		script(src="/public/js/tinymce/tinymce.min.js")
+		script(src="/public/js/toastr.min.js")
+		script(src="/public/js/scripts.js")
+	
+		script.
+			var statistics = '!{statistics}';
+			var toast_type = '#{toast_type}';
+			var toast_message = '#{toast_message}';
+		
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width,initial-scale=1')
+		meta(name='description', content='')
+		meta(name='keywords', content='')
+		meta(name='author', content='')
+
+	body
+		nav.navbar.header
+			.container
+				.navbar-header
+					a.navbar-brand(href='/')
+						img.logo(src='/public/img/logo.jpg', alt='DIRECTORY')
+				button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				.collapse.navbar-collapse#myNavbar
+					ul.nav.navbar-nav.navbar-right
+						li
+							a(href='/') App Directory
+						li
+							a(href='/apps') Developer

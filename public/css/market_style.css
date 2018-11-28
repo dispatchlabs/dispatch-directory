@@ -1,0 +1,149 @@
+
+#hero-banner{
+	height: 450px; 
+	background-position: center center; 
+	background-repeat: no-repeat; 
+	background-attachment: scroll; 
+	background-size: cover; 
+	background-color: #465a65;
+	padding-top: 80px; 
+	padding-bottom: 60px;
+}
+
+#hero-banner.section-container {
+	padding: 30px;
+}
+
+#hero-banner #hero-headline{
+	font-size: 42px; 
+	font-weight: 300; 
+	text-align: center; 
+	color: #ffffff;
+}
+
+#hero-banner #searchButton{
+	float: right; 
+	margin: 0; 
+	width: 50px; 
+	height: 100%; 
+	color: #fff; 
+	background-color: #18c2ea; 
+	border: none;
+	border-radius: 0px 100px 100px 0px;
+}
+
+#hero-banner #searchLoading{
+	margin-top:10px;
+	float:right;
+	width:30px;
+	display:none;
+}
+
+#hero-banner #search-bar{
+	font-size:18px; 
+	height: 40px; 
+	border-radius: 100px; 
+	background-color: #fff; 
+	box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2); 
+	padding-left: 18px;
+}
+
+#hero-banner #search-bar-container{
+	max-width:500px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#hero-banner #search{
+	border: none; 
+	width: calc(100% - 80px);
+	height:40px
+}
+
+.details-action{
+	margin: 12px 0;
+	float: none;
+}
+
+@media only screen and (min-width: 992px) { 
+	.details-action{
+		float: right;
+	}
+}
+
+#details-name{
+	line-height:48px;
+	font-size:36px;
+	margin: 10px 0;
+	margin-bottom: 25px;
+	text-rendering: optimizeLegibility;
+	color: #444;
+}
+
+.details-attributes-title{
+	font-weight:600;
+}
+#details-video{
+	margin-bottom:20px;
+}
+.details-slider img{
+	max-height:300px;
+}
+.details-attributes{
+	padding-left:0;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+#details-description p{
+	margin-bottom:20px;
+	margin-top:0;
+}
+
+#details-description{
+	padding-bottom:60px;
+}
+.details-attributes li{
+	list-style-type: none;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.details-divider{
+	border-bottom: 1px solid #ccc;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+#details-banner .bx-wrapper .bx-controls-direction a {
+    z-index: 20;
+}
+
+.no-results-card{
+	padding: 40px;
+	font-weight:600;
+	text-align:center;
+	max-width:300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 991px) { 
+	.kleo-navbar-fixed.navbar-transparent #header{
+		background-color: transparent;
+	}
+	#main{
+		margin-top:-88px;
+	}
+}
+
+@media only screen and (min-width: 420px) { 
+	#hero-banner{
+		padding-top: 120px;
+	}
+}
+
+body:not(.logged-in) #menu-main a[href="/#my-apps=1"]{
+	display:none;
+}

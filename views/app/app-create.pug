@@ -1,0 +1,94 @@
+include ../header
+section.breadcrumb
+  div.container
+    h1.
+      Add App
+    a(href="/")
+      span.
+         Home
+    span.
+       /
+    a(href="/apps")
+      span.
+         My Apps
+    span.
+       /
+    span.
+       Add App
+
+section.form
+  div.container
+    form.form(method="post", id="createForm" ,action="/api/apps/create" enctype="multipart/formdata" novalidate)
+      input#publish(name="publish", value="false", type="hidden")
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Application Name
+          #[span.text-danger *]
+        div.col-md-6.controls
+          input.form-control(required, data-validation-required-message="Please fill out this field", name="name")
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Summary
+          #[span.text-danger *]
+        div.col-md-6.controls
+          textarea.form-control(required, data-validation-required-message="Please fill out this field", name="summary" , maxlength="150")
+          p.form-text Maximum 150 characters
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Description
+          #[span.text-danger *]
+        div.col-md-6.controls
+          textarea.form-control(required, data-validation-required-message="Please fill out this field", name="description")#description
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Icon
+          #[span.text-danger *]
+        div.col-md-6
+          div#upload-icon.dropzone
+        div.col-md-6.col-md-offset-3.controls
+          input#icon(name="icon", type="input", class="hidden", value="", required, data-validation-required-message="Please upload icon")
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Images
+        div.col-md-6
+          div#upload-images.dropzone
+            input#images(name="images", type="input", class="hidden", value="")
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Files
+        div.col-md-6
+          div#upload-files.dropzone
+            input#files(name="files", type="input", class="hidden", value="")
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Category
+          #[span.text-danger *]
+        div.col-md-6.controls
+          select.form-control.categorizer(multiple="multiple", required, data-validation-required-message="Please select at least one", name="category[]")
+            -var category = ["Accounting","Analytics","Automation","Booking Ticketing","Card Readers & POS","CRM","Customer Support","E-Commerce","Electronic Signature","Email Marketing & Dunning","Financing","Form Building","Fundraising","Gift Certificates","Inventory Management","Invoicing"];
+              each val in category
+                option(value=val) !{val}
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Website URL
+        div.col-md-6
+          input#website.form-control(name='website', type='text', data-validation-regex-regex="https?:\/\/.(\\w*?\\.)\\w{2,3}\\S*|http?:\/\/w{0,3}\\w*?\\.(\\w*?\\.)\\w{2,3}\\S*|www\\.(\\w*\\.)?\\w*?\\.\\w{2,3}\\S*|(\\w*?\\.)?\\w*?\\.\\w{2,3}[\/\?]\\S*", data-validation-regex-message='Please Provide valid URL')
+          p.help-block
+      div.form-group.row.control-group
+        div.col-md-3.item.
+          Video URL
+        div.col-md-6
+          input.form-control.video-url(name="video", id="video",  type="text" data-validation-regex-regex="https?:\/\/.(\\w*?\\.)\\w{2,3}\\S*|http?:\/\/w{0,3}\\w*?\\.(\\w*?\\.)\\w{2,3}\\S*|www\\.(\\w*\\.)?\\w*?\\.\\w{2,3}\\S*|(\\w*?\\.)?\\w*?\\.\\w{2,3}[\/\?]\\S*"  data-validation-regex-message="Please Provide valid video url" )
+          div.video-preview
+          p.help-block
+      div.form-group.row.control-group
+        div.col-md-3
+        div.col-md-6.controls
+          input(type="checkbox", required, data-validation-required-message="Please check this box if you want to proceed.")
+          label. 
+             I agree to the terms and conditions.
+            #[span.text-danger *]
+      div.form-group.row
+        div.col-md-6.col-md-offset-3
+          button.btn.btn-primary.pull-right(type="submit", onclick="bSubmit=false;").
+            Save Draft

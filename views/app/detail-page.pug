@@ -1,0 +1,257 @@
+doctype html
+//[if IE 8 ]>    <html lang="en" class="ie8">    <![endif]
+html(lang='en')
+  head
+    title App Details
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    meta(name='description', content='')
+    meta(name='keywords', content='')
+    meta(name='author', content='')
+    link(href="/public/css/style.css", rel="stylesheet", type="text/css")
+    link(href="/public/css/select2.min.css" rel="stylesheet" type="text/css")
+    link(href="/public/css/toastr.css" rel="stylesheet" type="text/css")
+    // icons 
+    //      <link rel="apple-touch-icon" href="img/favicon.png">
+      	<link rel="shortcut icon" href="img/favicon.png">
+    // Bootstrap Core CSS 
+    link(rel='stylesheet', href='/public/css/bootstrap.min.css', type='text/css')
+    //font awesome icons
+    link(rel='stylesheet', href='/public/css/font-awesome.min.css', type='text/css')
+    // Custom CSS 
+    link(rel='stylesheet', href='/public/css/custom.css', type='text/css')
+    // cropper css
+    link(rel='stylesheet', href='/public/css/cropper.min.css', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries 
+    // WARNING: Respond.js doesn't work if you view the page via file:// 
+    //      [if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+          <![endif]    
+ 
+  body.bg-light
+    nav.navbar.header
+      .container
+        .navbar-header
+          a.navbar-brand(href='/')
+            img.logo(src='/public/img/logo.jpg', alt='DIRECTORY')
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        .collapse.navbar-collapse#myNavbar
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/') App Directory
+            li
+              a(href='/apps') Developer
+
+
+//section
+.jumbotron.hero-section.text-center
+  .container
+    h2.Integration__heading !{apps.name}
+    img.Integration-logo(src=apps.customData.icon, alt='')
+//end
+.container
+  // sidebar 
+  .col-sm-12.col-md-4.col-md-push-8
+    // download button card 
+    .cardapp.text-center
+      if user && user == 'developer'
+        button.btn-primary.btn.btn-lg(disabled)
+          i.fa.fa-check
+          |  Learn More
+      else
+        if (apps && apps.hasOwnProperty("ownership"))
+          if (apps.ownership.ownershipStatus === 'active')
+            button.btn-danger.btn.btn-lg.appInstall
+              i.fa.fa-times
+              |  Uninstall App
+          else if (apps.ownership.ownershipStatus === 'uninstalled')
+            button.btn-primary.btn.btn-lg.appInstall
+              i.fa.fa-check
+              |  Get It Now
+        else
+          button.btn-primary.btn.btn-lg.appInstall
+            i.fa.fa-check
+            |  Get It Now
+    // media card
+    if apps
+      if ((apps.customData.video !== undefined && apps.customData.video !== '') || apps.customData.images.length !== 0)
+          .cardapp
+            if (apps.customData.video !== undefined && apps.customData.video !== '')
+              .embed-responsive.embed-responsive-16by9
+            if apps.customData.images.length !== 0
+              .thumb-slider
+                ul.bxslider
+                  each val in apps.customData.images
+                    li
+                      a(href=val)
+                        img(src=val)
+    // detail card
+    if apps
+      if ((apps.customData.website !== undefined && apps.customData.website !== '') || apps.customData.category.length !== 0)
+          .cardapp
+            if (apps.customData.website !== undefined && apps.customData.website !== '')
+              h4.lead-txt Website
+              if apps.customData.website.search('http://') !== -1 || apps.customData.website.search('https://') !== -1
+                p
+                  a(href=apps.customData.website target="_blank") !{apps.customData.website}  
+              else
+                p
+                  a(href="http://"+apps.customData.website target="_blank") !{apps.customData.website}
+            if apps.customData.category.length !== 0    
+              h4.lead-txt Categories
+              p=apps.customData.category.join(', ')
+  // end sidebar 
+  // search conatiner 
+  .col-sm-12.col-md-8.col-md-pull-4
+    .main-content
+      .cardapp
+        .description
+          p !{apps.customData.description}
+    if related && related.list.length != 0
+      .related-product
+        h4 Other Related Apps
+        each val in related.list.slice(0,3)
+          .col-sm-6.col-md-4.MarketplaceFeature
+            a(href='/details/'+val.safeName)
+              .MarketplaceFeature-icon
+                img(src=val.customData.icon, alt='')
+              h3=val.name
+              p.MarketplaceFeature-text !{val.customData.summary}.
+// Bootstrap Core JavaScript
+script(src='/public/js/jquery.js')
+script(src="/config/config.js")
+script(src="/public/js/cropper.min.js")
+script(src="/public/js/dropzone.js")
+script(src="/public/js/video-embed.js")
+script(src="/public/js/video-embed.js.js")
+script(src="/public/js/select2.min.js")
+script(src="/public/js/jqBootstrapValidation.js")
+script(src="/public/js/jquery.flot.min.js")
+script(src="/public/js/cropper-dropzone.js")
+script(src="/public/js/tinymce/tinymce.min.js")
+script(src="/public/js/toastr.min.js")
+script(src='/public/js/bootstrap.min.js')
+script(src='/public/js/BxSlider.js')
+script(src='/public/js/scripts.js')
+script(src='/public/js/jquery.magnific-popup.min.js') 
+script(type='text/javascript').
+  var statistics = '!{statistics}';
+  var toast_type = '#{toast_type}';
+  var toast_message = '#{toast_message}';
+  var application;
+  var newappstatus = 'newapp';
+  var ownerid = '';
+  $(document).ready(function(){
+    application = !{JSON.stringify(apps)};
+    var video = '!{apps.customData.video}';
+    // video url check
+    if(video && getEmbedVideoCode(video) === "no_video") {
+      if(video.search("http://") !== -1 || video.search("https://") !== -1) {
+        $('.embed-responsive').html('<a class="video-button btn btn-default" href="'+video+'" target="_blank">Video</a>');  
+      } else {
+        $('.embed-responsive').html('<a class="video-button btn btn-default" href="http://'+video+'" target="_blank">Video</a>');
+      }
+     
+    } else {
+      var videoElement = getEmbedVideoCode(video);
+      $('.embed-responsive').html(videoElement);
+    }
+    // image slider
+    if($.fn.bxSlider){
+      $('.thumb-slider ul').bxSlider({loop:false});
+    }
+    $('.thumb-slider').magnificPopup({
+      delegate: 'li:not(.bx-clone)>a',
+      type: 'image',
+      tLoading: 'Loading image #%curr%...',
+      mainClass: 'mfp-img-mobile',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0,1],
+        tCounter: '%curr% of %total%'
+      },
+      image: {
+        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+      }
+    });
+   });
+
+   // install and uninstall button click event
+    $(".appInstall").click(function(){
+      if(application.hasOwnProperty("ownership")){ // for existing approved app
+        $.post('/api/details', { apps: application , appStatus: application.ownership.ownershipStatus }, function(data,status){
+          
+          if(status != 'success'){
+            toastr.error(status);
+          }
+          if(jQuery.isEmptyObject(data)){
+            toastr.error('error');          
+          } 
+          else{
+            if(data === 'installed') { // install app
+              $('.appInstall').removeClass("btn-primary");
+              $('.appInstall').addClass("btn-danger");
+              $('i').removeClass("fa-check");
+              $('button').html('<i class="fa fa-times"></i> Uninstall App');
+              application.ownership.ownershipStatus = 'active';
+              toastr.success('App installed successfully');
+            }
+            else if(data === 'uninstalled') { // uninstall app
+              $('.appInstall').removeClass("btn-danger");
+              $('.appInstall').addClass("btn-primary");
+              $('i').removeClass("fa-times");
+              $('button').html('<i class="fa fa-check"></i> Get It Now');
+              application.ownership.ownershipStatus = 'uninstalled';
+              toastr.success('App uninstalled successfully');
+            }
+            else if(data === 'error installing'){
+                toastr.error('There was an error Installing the app. Please try again');
+            }
+            else if(data === 'error uninstalling'){
+                toastr.error('There was an error Uninstalling the app. Please try again');
+            }
+          }
+        });
+      } else { // for new approved app
+          $.post('/api/details', { apps: application , appStatus: newappstatus , ownerid: ownerid }, function(data,status){
+            if(status != 'success'){
+              toastr.error(status);
+            }
+            else if(jQuery.isEmptyObject(data)){
+              toastr.error('error');          
+            } 
+            else{
+              if(data.ownershipStatus === 'active'){ // install app
+                $('.appInstall').removeClass("btn-primary");
+                $('.appInstall').addClass("btn-danger");
+                $('i').removeClass("fa-check");
+                $('button').html('<i class="fa fa-times"></i> Uninstall App');
+                newappstatus = 'newapp active';
+                ownerid = data.ownershipId;
+                toastr.success('App installed successfully');
+              }
+              else if(data.ownershipStatus === 'uninstalled') { // uninstall app
+                $('.appInstall').removeClass("btn-danger");
+                $('.appInstall').addClass("btn-primary");
+                $('i').removeClass("fa-times");
+                $('button').html('<i class="fa fa-check"></i> Get It Now');
+                newappstatus = 'newapp uninstalled';
+                ownerid = '';
+                toastr.success('App uninstalled successfully');
+              }
+              else if(data === 'error installing'){
+                toastr.error('There was an error Installing the app. Please try again');
+              }
+              else if(data === 'error uninstalling'){
+                toastr.error('There was an error Uninstalling the app. Please try again');
+              }
+            }
+          });
+        }
+    });

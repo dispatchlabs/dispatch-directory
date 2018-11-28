@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title 404 error page
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1,maximum-scale=1')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    link(href='/public/css/error_style.css', rel='stylesheet', type='text/css', media='all')
+  body
+    .wrap
+      .content
+        .logo
+          h1(style="color:white;font-size:200px;padding:0;font-weight: 900") 404
+          span
+            img(src='/public/img/signal.png')
+            | Oops! The Page you requested was not found!|  #{errorMessage}
+        .buttom
+          .seach_bar
+            p
+              | you can go to &nbsp;
+              span
+                a(href='/') home
+              | page

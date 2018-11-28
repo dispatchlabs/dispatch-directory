@@ -1,0 +1,196 @@
+doctype html
+//[if IE 8 ]>    <html lang="en" class="ie8">    <![endif]
+html(lang='en')
+  head
+    title Marketplace home
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    meta(name='description', content='')
+    meta(name='keywords', content='')
+    meta(name='author', content='')
+    // icons 
+    //      <link rel="apple-touch-icon" href="public/img/favicon.png">
+      	<link rel="shortcut icon" href="public/img/favicon.png">
+    // Bootstrap Core CSS 
+    link(rel='stylesheet', href='/public/css/bootstrap.min.css', type='text/css')
+    //font awesome icons
+    link(rel='stylesheet', href='/public/css/font-awesome.min.css', type='text/css')
+    // Custom CSS 
+    link(rel='stylesheet', href='/public/css/custom.css', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries 
+    // WARNING: Respond.js doesn't work if you view the page via file:// 
+    //      [if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+          <![endif]
+    script(src='/public/js/jquery.js')      
+    script(type="text/javascript").
+      var category = 'default';
+      var collection = 'default';
+      var set = '';
+      $(document).ready(function(){
+        // category filter
+        $(".category-filter").click(function(){
+          $("#IntegrationSearch").val("");
+          $('.collection-filter').parent().removeClass("active");
+          $('.category-filter').parent().removeClass("active");
+          $(this).parent().addClass( "active" );
+          set = 'category';
+          var appContent = "";
+          category = $(this).attr("data-category");  
+          $.get('/web.js/category-filter?category='+category,function(data,status){
+           if(status != 'success'){
+             appContent = '<a>error</a>';
+             $('.main-content').html(appContent);
+           }
+           else if(jQuery.isEmptyObject(data)){
+             appContent = '<a class="msg">There are no apps available</a>';
+             $('.main-content').html(appContent);
+           } 
+           else{   
+               // For each item in our JSON, add app info to the content string
+              $.each(data, function(){
+               appContent += '<a class="Integration-box" href="details/'+this.safeName+'"  data-context='+this.customData.category+'><div class="row"><img class="Integration-Icon" src='+this.customData.icon+'><div class="Integration-Detail"><h3>'+this.name+'</h3><p class="IntegrationTagline">'+this.customData.summary+'</p></div></div></a>';
+              });
+                 // Inject the whole content string into our existing HTML table
+             $('.main-content').html(appContent);
+            }
+          });
+        });
+        // collection filter 
+        $('.collection-filter').click(function(){
+          $("#IntegrationSearch").val("");
+          $('.collection-filter').parent().removeClass("active");
+          $('.category-filter').parent().removeClass("active");
+          $(this).parent().addClass( "active" );
+          set = 'collection';
+          var appContent = "";
+          collection = $(this).attr("data-collection");
+          $.get('/web.js/collection-filter?collection='+collection,function(data,status){
+            if(status != 'success'){
+              appContent = '<a>error</a>';
+              $('.main-content').html(appContent);
+            }
+            else if(jQuery.isEmptyObject(data)){
+              appContent = '<a class="msg">There are no apps available</a>';
+              $('.main-content').html(appContent);
+            } 
+            else {  
+            // For each item in our JSON, add app info to the content string
+              $.each(data, function(){
+                appContent += '<a class="Integration-box" href="details/'+this.safeName+'" data-context='+this.customData.category+'><div class="row"><img class="Integration-Icon" src='+this.customData.icon+'><div class="Integration-Detail"><h3>'+this.name+'</h3><p class="IntegrationTagline">'+this.customData.summary+'</p></div></div></a>';
+              });
+                 // Inject the whole content string into our existing HTML table
+              $('.main-content').html(appContent);
+            }
+          });
+        });
+
+        // searching
+        $('.query').keyup(function(){
+            setTimeout(function(){
+              $('.fa').show();
+              var appContent = "";
+              var searchText = $('.query').val();
+              $.get('/web.js/search?searchText='+searchText+'&category='+category+'&collection='+collection+'&set='+set,function(data,status){
+                if(status != 'success'){
+                   appContent = '<a>error</a>';
+                   $('.main-content').html(appContent);
+                }
+                else if(jQuery.isEmptyObject(data)){
+                   appContent = '<a class="msg">There are no apps available</a>';
+                   $('.main-content').html(appContent);
+                }
+                else{
+               // For each item in our JSON, add app info to the content string
+                  $.each(data, function(){
+                    appContent += '<a class="Integration-box" href="details/'+this.safeName+'"  data-context='+this.customData.category+'><div class="row"><img class="Integration-Icon" src='+this.customData.icon+'><div class="Integration-Detail"><h3>'+this.name+'</h3><p class="IntegrationTagline">'+this.customData.summary+'</p></div></div></a>';
+                  });
+                 // Inject the whole content string into our existing HTML table
+                  $('.main-content').html(appContent);  
+                }
+              });
+            },500);
+            setTimeout(function(){
+              $('.fa').hide();
+            },1000);   
+        });  
+      });
+  
+  body
+    nav.navbar.header
+      .container
+        .navbar-header
+          a.navbar-brand(href='/')
+            img.logo(src='public/img/logo.jpg', alt='DAPP DIRECTORY')
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        .collapse.navbar-collapse#myNavbar
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/') App Directory
+            li
+              a(href='/apps') Developer
+    // Hero section
+    .jumbotron.hero-section
+      .container
+        h1.heading Dispatch App Directory
+        p.sub-txt Apps and add-ons for the Dispatch protocol
+        if featured && featured.count && featured.count != 0
+          each val in featured.list.slice(0,4)
+            .col-sm-6.col-md-3.MarketplaceFeature
+              a(href='details/'+val.safeName)
+                .MarketplaceFeature-icon
+                  img(src=val.customData.icon, alt='')
+                h3=val.name
+                p.MarketplaceFeature-text !{val.customData.summary}
+    //end
+    .container
+      // sidebar 
+      .sidebar-toggle.hidden
+        button.btn-info.btn(type='button')
+          span.glyphicon.glyphicon-menu-hamburger
+      .col-md-4.col-lg-3
+        .sidebar
+          h4.heading Search Directory
+          form.search-form(accept-charset='UTF-8', action='javascript:void(0)' , method='post')
+            i.fa.fa-spinner.fa-spin.searchLoader(style='display: none;')
+            input#IntegrationSearch.form-control.search(type='text', placeholder='Search', aria-label='Search' , class='query')
+          h4.heading Collections
+          ul
+            -var collections = ["All Apps","My Apps","Popular","Featured"];
+            each col in collections
+              li
+                a(href='javascript:void(0)' class="collection-filter" data-collection=col) !{col}
+          h4.heading Categories
+          ul
+            -var categories = ["Accounting","Analytics","Automation","Booking Ticketing","Card Readers & POS","CRM","Customer Support","E-Commerce","Electronic Signature","Email Marketing & Dunning","Financing","Form Building","Fundraising","Gift Certificates","Inventory Management","Invoicing"];
+             each cat in categories
+              li
+                a(href='javascript:void(0)' class="category-filter" data-category=cat ) !{cat}
+      // end sidebar 
+      // search conatiner
+      .col-sm-12.col-md-8.col-lg-9
+        .main-content
+          if apps && apps.count && apps.count != 0
+            each val in apps.list
+              a.Integration-box(href='details/'+val.safeName)
+                .row
+                  img.Integration-Icon(src=val.customData.icon)
+                  .Integration-Detail
+                    h3=val.name
+                    //<p class="IntegrationCategory"></p>
+                    p.IntegrationTagline !{val.customData.summary}
+          else
+            a.msg There are no apps available 
+             
+          
+    // jQuery 
+    
+    script(src='/public/js/jqueryUI.js')
+    // Bootstrap Core JavaScript 
+    script(src='/public/js/bootstrap.min.js')
+    script(src='/public/js/custom.js')
