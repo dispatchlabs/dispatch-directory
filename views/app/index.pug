@@ -123,7 +123,7 @@ html(lang='en')
       .container
         .navbar-header
           a.navbar-brand(href='/')
-            img.logo(src='public/img/logo.jpg', alt='DAPP DIRECTORY')
+            img.logo(src='public/img/logo.jpg', alt='DISPATCH')
         button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
           span.icon-bar
           span.icon-bar
@@ -131,14 +131,16 @@ html(lang='en')
         .collapse.navbar-collapse#myNavbar
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/') App Directory
+              a(href='/') Dapp Directory
             li
-              a(href='/apps') Developer
+              a(href='http://api.dispatchlabs.io') Dev Docs
+            li
+              a(href='/apps') Add your App
     // Hero section
     .jumbotron.hero-section
       .container
-        h1.heading Dispatch App Directory
-        p.sub-txt Apps and add-ons for the Dispatch protocol
+        h1.heading Dispatch Dapp Directory
+        p.sub-txt Build your decentralized app on the Dispatch protocol.
         if featured && featured.count && featured.count != 0
           each val in featured.list.slice(0,4)
             .col-sm-6.col-md-3.MarketplaceFeature
@@ -147,6 +149,14 @@ html(lang='en')
                   img(src=val.customData.icon, alt='')
                 h3=val.name
                 p.MarketplaceFeature-text !{val.customData.summary}
+        if popular && popular.count && popular.count != 0
+          each val in popular.list.slice(0,4)
+            .col-sm-6.col-md-3.MarketplacePopular
+              a(href='details/'+val.safeName)
+                .MarketplacePopular-icon
+                  img(src=val.customData.icon, alt='')
+                h3=val.name
+                p.MarketplacePopular-text !{val.customData.summary}
     //end
     .container
       // sidebar 
