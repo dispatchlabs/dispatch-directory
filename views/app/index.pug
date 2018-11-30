@@ -131,15 +131,15 @@ html(lang='en')
         .collapse.navbar-collapse#myNavbar
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/') Dapp Directory
+              a(href='/') Directory
             li
-              a(href='https://api.dispatchlabs.io') Developer Docs
+              a(href='https://api.dispatchlabs.io') Documentation
             li
               a(href='/apps/create') Add your App
     // Hero section
     .jumbotron.hero-section
       .container
-        h1.heading Dispatch Dapp Directory
+        h1.heading Dispatch Directory
         p.sub-txt Build your decentralized app on the Dispatch protocol.
         if featured && featured.count && featured.count != 0
           each val in featured.list.slice(0,4)
@@ -177,7 +177,7 @@ html(lang='en')
                 a(href='javascript:void(0)' class="collection-filter" data-collection=col) !{col}
           h4.heading Categories
           ul
-            -var categories = ["Accounting","Analytics","Automation","Booking Ticketing","Card Readers & POS","CRM","Customer Support","E-Commerce","Electronic Signature","Email Marketing & Dunning","Financing","Form Building","Fundraising","Gift Certificates","Inventory Management","Invoicing"];
+            -var categories = ["AI","Business Intelligence","Developer Tools","Entertainment","Healthcare","Leisure / Travel","Location Services","Marketplaces","Payments","Point of Sale","Social Networks","Social Impact","Security","Wireless"];
              each cat in categories
               li
                 a(href='javascript:void(0)' class="category-filter" data-category=cat ) !{cat}
